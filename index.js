@@ -19,21 +19,27 @@ app.get('/', (req,res)=>{
 
 
 app.post('/send',(req,res)=>{
-    console.log(req.body);
+    console.log(req.body.email);
 
     const transporter= nodemailer.createTransport({
         service:'gmail',
         auth:{
             user:'zeehello24@gmail.com',
-            pass:'pass'
+            pass:process.env.PASSWORD
         }
     })
 
     const mailOpctions={
-        from: req.body.email,
-        to:'zeehello24@gmail.com',
-        subject:`Message From ${req.body.company}`,
-        text:req.body.comment
+        from:'zeehello24@gmail.com',
+        to: req.body.email,
+        subject:`Message From`,
+        text:'<h2>Hello Everyone</h2>',
+        html:`
+        <span>${req.body.name}</span>
+        <h4>${req.body.company}</h4>
+        <h5>${req.body.number}</h5>
+        <h5>${req.body.comment}</h5>
+        `
     }
 
 
